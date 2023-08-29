@@ -10,3 +10,5 @@ Repository Github yang digunakan sebagai referensi
 
 ## Software
 Software yang digunakan untuk membangun IoT
+* [Visual Studio Code]
+* 
