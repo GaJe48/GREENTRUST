@@ -3,6 +3,12 @@
 <p align="center">Menghasilkan Sumber Daya, Pendapatan, dan Jaringan Ramah Lingkungan untuk Mengubah Rongsok menjadi Harta Berkelanjutan yang Bermanfaat</p>
 
 
+
+## Hardware
+Hardware yang digunakan untuk membangun IoT
+* Raspberry Pi 4 model B
+* 
+
 ## Source Code
 Repository Github yang digunakan sebagai referensi
 * [gandalf15/HX711](https://github.com/gandalf15/HX711/)
