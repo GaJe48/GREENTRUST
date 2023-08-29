@@ -16,5 +16,11 @@ Repository Github yang digunakan sebagai referensi
 
 ## Software
 Software yang digunakan untuk membangun IoT
-* [Visual Studio Code]
-* 
+* [Visual Studio Code](https://code.visualstudio.com/)
+* [Fritzing](https://fritzing.org/)
+* [Raspberry Pi Imager](https://www.raspberrypi.com/software/)
+* [Draw.io](https://www.drawio.com/)
+* [VNC Viewer](https://www.realvnc.com/en/connect/download/viewer/)
+* [Zoom](https://zoom.us/id/download)
+* [Git](https://git-scm.com/)
+* [FreeCAD](https://www.freecad.org/)
