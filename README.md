@@ -1,1 +1,1 @@
-<h1 align="center">GREENTRUST</h1>
+<h2 align="center">GREENTRUST</h2>
