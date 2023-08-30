@@ -7,15 +7,27 @@
 ## Hardware
 Hardware yang digunakan untuk membangun IoT
 * Raspberry Pi 4 model B
-* 
+* DHT22 (Suhu & Kelembapan)
+* Loadcell 20Kg
+* Battery Li-Po 5200 mAh
+* HX711 (Module Loadcell)
+* OLED Display 1,3 inch SH1106
+* Step Down XL4015
+* HC-SR04 (Ultrasonic)
+
+## Wiring Diagram
+![dashboard](https://github.com/GaJe48/GREENTRUST/blob/master/wiring_bb.png)
+![dashboard](https://github.com/GaJe48/GREENTRUST/blob/master/wiring_schem.png)
 
 ## Source Code
 Repository Github yang digunakan sebagai referensi
 * [gandalf15/HX711](https://github.com/gandalf15/HX711/)
+* [rm-hull/luma.oled](https://github.com/rm-hull/luma.oled) (SH1106)
 * 
 
 ## Software
 Software yang digunakan untuk membangun IoT
+* [Node-RED](https://nodered.org/)
 * [Visual Studio Code](https://code.visualstudio.com/)
 * [Fritzing](https://fritzing.org/)
 * [Raspberry Pi Imager](https://www.raspberrypi.com/software/)
@@ -24,3 +36,9 @@ Software yang digunakan untuk membangun IoT
 * [Zoom](https://zoom.us/id/download)
 * [Git](https://git-scm.com/)
 * [FreeCAD](https://www.freecad.org/)
+
+## Web Platform
+Website pendukung IoT
+* [Ubidots](https://ubidots.com/)
+* [Canva](https://www.canva.com/)
+* [YouTube](https://www.youtube.com/)
