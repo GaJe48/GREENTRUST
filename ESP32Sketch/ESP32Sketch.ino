@@ -28,8 +28,8 @@ void splashScreen(){
   display.println("by");display.println();
   display.println("AdaLovelace Team");
   display.display();
-  display.clearDisplay();
   delay(5000);
+  display.clearDisplay();
   display.display();
 }
 
@@ -71,24 +71,13 @@ void tampilan(int volume, float berat, float suhu, int kelembapan){
   display.display();
 }
 /********************************
-  WiFi MQTT Library, variable, method
+  WiFi Library, variable, method
 *********************************/
 #include <WiFi.h>
-#include <PubSubClient.h>
 
-WiFiClient raspi;
-PubSubClient client(raspi);
-
-#define TOKEN "abcdefghijklm"
 #define WIFI_SSID "studio.01FO"
 #define WIFI_PASS "Baru872131"
-#define MQTT_CLIENT_NAME "GreenTRUST"
-#define SUHU "suhu"
-#define KELEMBAPAN "kelembapan"
-#define VOLUME "volume"
-#define BERAT "berat"
 
-#define MQTT_BROKER "192.168.1.2:1883"
 
 void initWifi()
 {
@@ -100,25 +89,28 @@ void initWifi()
   display.print("Menyambung WiFI ");
 
   while(!koneksiSukses){
-    
     display.print(".");
     display.display();
     delay(500);
+    
     if (WiFi.status() == WL_CONNECTED)
     {
-      Serial.println("");
-      Serial.println("WiFi Terkoneksi");
-      lcd.setCursor(0, 1);
-      lcd.print("WiFi Terkoneksi");
-
-      Serial.println("Alamat IP: ");
-      Serial.println(WiFi.localIP());
-      delay(2000);
+      display.println("");
+      display.println("WiFi Terkoneksi");
+      display.println("Alamat IP: ");
+      display.println(WiFi.localIP());
       koneksiSukses = true;
+      display.display();
+      delay(2000);
+      display.clearDisplay();
+      display.display();
     }
     else if (WiFi.status() == WL_NO_SSID_AVAIL)
     {
-      Serial.println("SSID tdk ditemukan. Cek SSID atau ganti SSID.");
+      display.println("==> GAGAL!");
+      display.println("SSID tdk ditemukan");
+      display.println("Cek SSID atau ganti SSID.");
+      display.display();
       while (true)
       {
         ;
@@ -126,20 +118,99 @@ void initWifi()
     }
     else if (WiFi.status() == WL_CONNECT_FAILED)
     {
-      Serial.println("");
-      Serial.println("Koneksi WiFi Gagal...");
-      Serial.println("Restart ESP32...");
+      display.println("");
+      display.println("Koneksi WiFi Gagal...");
+      display.println("Restart ESP32...");
+      display.display();
       delay(2000);
       ESP.restart();
     }
   }
-    
-  }
+}
 
+void cekKoneksiWiFi()
+{
+  // Jika WiFi putus, restart ESP32
+  if ((WiFi.status() != WL_CONNECTED))
+  {
+    display.clearDisplay();
+    display.setCursor(0,0);
+    display.println("WiFi terputus... ");
+    display.println("Restart ESP32..");
+    delay(2000);
+    ESP.restart();
+  }
+}
+
+/********************************
+  MQTT Library, variable, method
+*********************************/
+#include <PubSubClient.h>
+
+WiFiClient raspi;
+PubSubClient client(raspi);
+
+#define MQTT_BROKER_IP "192.168.1.2"
+#define MQTT_BROKER_PORT 1883
+#define TOKEN "abcdefghijklm"
+
+#define MQTT_CLIENT_NAME "GreenTRUST"
+#define DEVICE_LABEL "GreenTRUST_1"
+
+#define SUHU "suhu"
+#define KELEMBAPAN "kelembapan"
+#define VOLUME "volume"
+#define BERAT "berat"
+
+// Mendapatkan koneksi MQTT
+void mqttReconnect()
+{
+  // Ulang sampai terkoneksi
+  while (!client.connected())
+  {
+    Serial.println("Membuka koneksi MQTT...");
+
+    // Melakukan koneksi
+    if (client.connect(MQTT_CLIENT_NAME, TOKEN, ""))
+    {
+      Serial.println("MQTT terkoneksi!");
+    }
+    else
+    {
+      Serial.print("Koneksi MQTT gagal, kode gagal=");
+      Serial.print(client.state());
+      Serial.println(" coba lagi dalam 2 detik");
+      delay(2000);
+    }
+  }
+}
+
+// Cek koneksi MQTT
+void cekKoneksiMQTT()
+{
+  cekKoneksiWiFi();
+  if (!client.connected())
+  {
+    //    client.subscribe(topicSubscribe);
+    mqttReconnect();
+  }
+}
+
+// Callback koneksi MQTT
+void callback(char *topic, byte *payload, unsigned int length)
+{
+  char p[length + 1];
+  memcpy(p, payload, length);
+  p[length] = NULL;
+  String message(p);
+  Serial.write(payload, length);
+  Serial.println(topic);
 }
 
 
-
+/**************************************
+  Main program
+***************************************/
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -156,6 +227,12 @@ void setup() {
   delay(1000);
 
   splashScreen();   // Tampilkan splash screen
+
+  initWiFi();       // Inisiasi WiFi
+
+  // Inisiasi MQTT
+  client.setServer(MQTT_BROKER_IP, MQTT_BROKER_PORT);
+  client.setCallback(callback);
 
   
 }
