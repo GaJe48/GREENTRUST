@@ -6,6 +6,7 @@
 
 ## Contents
 * [Hardware](#hardware)
+* [Ubidots Dashboard](#ubidots-dashboard)
 * [Wiring Diagram](#wiring-diagram)
 * [Source Code](#source-code)
 * [Software](#software)
@@ -21,6 +22,9 @@ Hardware yang digunakan untuk membangun IoT
 * OLED Display 1,3 inch SH1106
 * Step Down XL4015
 * HC-SR04 (Ultrasonic)
+
+## Ubidots Dashboard
+![dashboard](https://github.com/GaJe48/GREENTRUST/blob/master/)
 
 ## Wiring Diagram
 ![dashboard](https://github.com/GaJe48/GREENTRUST/blob/master/wiring_bb.png)
